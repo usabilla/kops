@@ -93,6 +93,7 @@
     "aws/credentials/ec2rolecreds",
     "aws/credentials/endpointcreds",
     "aws/credentials/stscreds",
+    "aws/csm",
     "aws/defaults",
     "aws/ec2metadata",
     "aws/endpoints",
@@ -104,6 +105,8 @@
     "internal/shareddefaults",
     "private/protocol",
     "private/protocol/ec2query",
+    "private/protocol/eventstream",
+    "private/protocol/eventstream/eventstreamapi",
     "private/protocol/json/jsonutil",
     "private/protocol/jsonrpc",
     "private/protocol/query",
@@ -128,8 +131,8 @@
     "service/s3",
     "service/sts"
   ]
-  revision = "5197757a58a794d49d2d0c50a932997157734100"
-  version = "v1.13.60"
+  revision = "f0bbc646e13bfc451409e960cf33239aabb8671a"
+  version = "v1.14.9"
 
 [[projects]]
   name = "github.com/bazelbuild/bazel-gazelle"
@@ -155,8 +158,8 @@
     "build",
     "tables"
   ]
-  revision = "a05406a1a855c6d8ebfc368555ace7638d83c0d9"
-  version = "0.6.0"
+  revision = "49a6c199e3fbf5d94534b2771868677d3f9c6de9"
+  version = "0.12.0"
 
 [[projects]]
   name = "github.com/beorn7/perks"
@@ -1477,6 +1480,12 @@
   revision = "01a732e01d00cb9a81bb0ca050d3e6d2b947927b"
 
 [[projects]]
+  name = "k8s.io/helm"
+  packages = ["pkg/strvals"]
+  revision = "f6025bb9ee7daf9fee0026541c90a6f557a3e0bc"
+  version = "v2.9.0"
+
+[[projects]]
   name = "k8s.io/kube-openapi"
   packages = [
     "pkg/builder",
@@ -1713,6 +1722,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "1debbbe03ce960a107f0c1d9a965dd32e6e3bb6cc75b07d3cd52cb5527ead016"
+  inputs-digest = "5750f3249df8b6422cbff297a97acbe90b8619b7ce444edd2de5ee00ada76eac"
   solver-name = "gps-cdcl"
   solver-version = 1

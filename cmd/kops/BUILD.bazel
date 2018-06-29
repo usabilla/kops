@@ -113,6 +113,7 @@ go_library(
         "//vendor/k8s.io/client-go/kubernetes:go_default_library",
         "//vendor/k8s.io/client-go/tools/clientcmd:go_default_library",
         "//vendor/k8s.io/client-go/util/homedir:go_default_library",
+        "//vendor/k8s.io/helm/pkg/strvals:go_default_library",
         "//vendor/k8s.io/kubernetes/pkg/kubectl/cmd/templates:go_default_library",
         "//vendor/k8s.io/kubernetes/pkg/kubectl/cmd/util:go_default_library",
         "//vendor/k8s.io/kubernetes/pkg/kubectl/cmd/util/editor:go_default_library",
@@ -126,7 +127,7 @@ go_binary(
     embed = [":go_default_library"],
     visibility = ["//visibility:public"],
     x_defs = {
-        "k8s.io/kops.Version": "{STABLE_KOPS_VERSION}",  # keep
+        "k8s.io/kops.Version": "{KOPS_VERSION}",  # keep
         "k8s.io/kops.GitVersion": "{BUILD_SCM_REVISION}",  # keep
     },
 )

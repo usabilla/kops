@@ -72,11 +72,14 @@ func walk1(v *Expr, stack *[]Expr, f func(x Expr, stk []Expr) Expr) Expr {
 		walk1(&v.Value, stack, f)
 	case *SliceExpr:
 		walk1(&v.X, stack, f)
-		if v.Y != nil {
-			walk1(&v.Y, stack, f)
+		if v.From != nil {
+			walk1(&v.From, stack, f)
 		}
-		if v.Z != nil {
-			walk1(&v.Z, stack, f)
+		if v.To != nil {
+			walk1(&v.To, stack, f)
+		}
+		if v.Step != nil {
+			walk1(&v.Step, stack, f)
 		}
 	case *ParenExpr:
 		walk1(&v.X, stack, f)
@@ -86,16 +89,22 @@ func walk1(v *Expr, stack *[]Expr, f func(x Expr, stk []Expr) Expr) Expr {
 		walk1(&v.X, stack, f)
 		walk1(&v.Y, stack, f)
 	case *LambdaExpr:
-		for i := range v.Var {
-			walk1(&v.Var[i], stack, f)
+		for i := range v.Params {
+			walk1(&v.Params[i], stack, f)
 		}
-		walk1(&v.Expr, stack, f)
+		for i := range v.Body {
+			walk1(&v.Body[i], stack, f)
+		}
 	case *CallExpr:
 		walk1(&v.X, stack, f)
 		for i := range v.List {
 			walk1(&v.List[i], stack, f)
 		}
 	case *ListExpr:
+		for i := range v.List {
+			walk1(&v.List[i], stack, f)
+		}
+	case *SetExpr:
 		for i := range v.List {
 			walk1(&v.List[i], stack, f)
 		}
@@ -107,22 +116,47 @@ func walk1(v *Expr, stack *[]Expr, f func(x Expr, stk []Expr) Expr) Expr {
 		for i := range v.List {
 			walk1(&v.List[i], stack, f)
 		}
-	case *ListForExpr:
-		walk1(&v.X, stack, f)
-		for _, c := range v.For {
-			for j := range c.For.Var {
-				walk1(&c.For.Var[j], stack, f)
-			}
-			walk1(&c.For.Expr, stack, f)
-			for _, i := range c.Ifs {
-				walk1(&i.Cond, stack, f)
-			}
+	case *Comprehension:
+		walk1(&v.Body, stack, f)
+		for _, c := range v.Clauses {
+			walk1(&c, stack, f)
 		}
+	case *IfClause:
+		walk1(&v.Cond, stack, f)
+	case *ForClause:
+		walk1(&v.Vars, stack, f)
+		walk1(&v.X, stack, f)
 	case *ConditionalExpr:
 		walk1(&v.Then, stack, f)
 		walk1(&v.Test, stack, f)
 		walk1(&v.Else, stack, f)
+	case *DefStmt:
+		for _, p := range v.Params {
+			walk1(&p, stack, f)
+		}
+		for _, s := range v.Body {
+			walk1(&s, stack, f)
+		}
+	case *IfStmt:
+		walk1(&v.Cond, stack, f)
+		for _, s := range v.True {
+			walk1(&s, stack, f)
+		}
+		for _, s := range v.False {
+			walk1(&s, stack, f)
+		}
+	case *ForStmt:
+		walk1(&v.Vars, stack, f)
+		walk1(&v.X, stack, f)
+		for _, s := range v.Body {
+			walk1(&s, stack, f)
+		}
+	case *ReturnStmt:
+		if v.Result != nil {
+			walk1(&v.Result, stack, f)
+		}
 	}
+
 	*stack = (*stack)[:len(*stack)-1]
 	return *v
 }
