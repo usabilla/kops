@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM k8s.gcr.io/debian-base-amd64:0.3
+FROM 644152709166.dkr.ecr.eu-west-1.amazonaws.com/usabilla/dev/dockerhub-mirror/k8s.gcr.io/debian-base-amd64:0.3
 
 # ca-certificates: Needed to talk to EC2 API
 # e2fsprogs: Needed to mount / format ext4 filesytems
